@@ -1,0 +1,3 @@
+# Terraform state and modules
+**/.terraform/
+.terraform/

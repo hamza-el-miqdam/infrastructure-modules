@@ -1,0 +1,22 @@
+# This is the top-most .editorconfig file
+root = true
+
+[*]
+# Use LF line endings, which is the standard for cross-platform projects
+end_of_line = lf
+
+# Use UTF-8 character set
+charset = utf-8
+
+# Remove any trailing whitespace from lines
+trim_trailing_whitespace = true
+
+# Ensure files end with a single newline character
+insert_final_newline = true
+
+# Match the Prettier `tabWidth` and `useTabs` settings
+indent_style = space
+indent_size = 2
+
+# Match the Prettier `printWidth` setting
+max_line_length = 80

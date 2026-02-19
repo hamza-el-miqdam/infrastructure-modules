@@ -1,0 +1,20 @@
+{
+  "name": "terraform-modules",
+  "version": "1.0.0",
+  "description": "Centralized repository for secure, compliant, and reusable Terraform modules for Zenika",
+  "scripts": {
+    "check_format": "prettier --check **/*.tf",
+    "format": "prettier --write **/*.tf",
+    "format:sh": "prettier --write **/*.sh",
+    "prepare": "husky"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Zenika/infrastructure-modules#readme",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.6.2",
+    "prettier-plugin-sh": "^0.18.0",
+    "prettier-plugin-terraform-formatter": "^1.2.1"
+  }
+}
