@@ -1,10 +1,17 @@
 # IAM Role and Policies for AWS Config
+data "aws_caller_identity" "current" {}
+
 data "aws_iam_policy_document" "config_assume_role" {
   statement {
     actions = ["sts:AssumeRole"]
     principals {
       type        = "Service"
       identifiers = ["config.amazonaws.com"]
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceAccount"
+      values   = [data.aws_caller_identity.current.account_id]
     }
   }
 }
@@ -24,13 +31,17 @@ resource "aws_iam_role_policy_attachment" "config_managed_policy" {
 # Custom policy to allow Config to write to the specified S3 bucket
 data "aws_iam_policy_document" "config_s3_policy" {
   statement {
-    sid     = "AllowConfigS3Access"
-    effect  = "Allow"
-    actions = ["s3:PutObject", "s3:GetBucketAcl"]
-    resources = [
-      "arn:aws:s3:::${var.s3_bucket_name}",
-      "arn:aws:s3:::${var.s3_bucket_name}/AWSLogs/*"
-    ]
+    sid       = "AllowConfigS3GetBucketAcl"
+    effect    = "Allow"
+    actions   = ["s3:GetBucketAcl"]
+    resources = ["arn:aws:s3:::${var.s3_bucket_name}"]
+  }
+
+  statement {
+    sid       = "AllowConfigS3PutObject"
+    effect    = "Allow"
+    actions   = ["s3:PutObject"]
+    resources = ["arn:aws:s3:::${var.s3_bucket_name}/AWSLogs/*"]
     condition {
       test     = "StringLike"
       variable = "s3:x-amz-acl"
